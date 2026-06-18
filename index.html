@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE HORSE APPROACHES</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body {
+    margin: 0;
+    background: #000;
+    color: #00ff66;
+    font-family: 'VT323', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    pointer-events: none;
+}
+
+.container {
+    text-align: center;
+    animation: flicker 0.1s infinite alternate;
+}
+
+h1 {
+    font-size: 5rem;
+    letter-spacing: 6px;
+    margin-bottom: 20px;
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 20px #00ff66,
+        0 0 40px #00ff66;
+}
+
+#timer {
+    font-size: 2.8rem;
+    text-shadow: 0 0 10px #00ff66;
+}
+
+.subtitle {
+    margin-top: 15px;
+    font-size: 1.4rem;
+    color: #44ff88;
+}
+
+@keyframes flicker {
+    from { opacity: 0.98; }
+    to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<div class="container">
+    <h1>THE HORSE APPROACHES</h1>
+    <div id="timer">LOADING...</div>
+    <div class="subtitle">JULY 4, 2026 • 11:00 PM EST</div>
+</div>
+
+<script>
+function updateCountdown() {
+    // July 4 2026, 11 PM Eastern Time (UTC-4 during daylight savings)
+    const target = new Date("2026-07-05T03:00:00Z").getTime();
+    const now = Date.now();
+    const distance = target - now;
+
+    if (distance <= 0) {
+        document.getElementById("timer").innerHTML = "THE HORSE HAS ARRIVED";
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("timer").innerHTML =
+        `${days} DAYS ${hours} HOURS ${minutes} MINUTES ${seconds} SECONDS`;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
